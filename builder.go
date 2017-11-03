@@ -1,23 +1,28 @@
 package gonfig
 
 // ConfigurationBuilder the builder to build configuration instance
-type configurationBuilder struct {
-	pList []IConfigurationProvider
+type configBuilder struct {
+	pList []IConfigProvider
 }
 
-func (b *configurationBuilder) AddProvider(p IConfigurationProvider) {
+func (b *configBuilder) AddProvider(p IConfigProvider) {
 	b.pList = append(b.pList, p)
 }
 
-// IConfigurationBuilder the builder interface to build configuration instance
-type IConfigurationBuilder interface {
-	AddProvider(p IConfigurationProvider)
+func (b *configBuilder) GetProviders() []IConfigProvider{
+	return b.pList
+}
+
+// IConfigBuilder the builder interface to build configuration instance
+type IConfigBuilder interface {
+	AddProvider(p IConfigProvider)
+	GetProviders() []IConfigProvider
 }
 
 // NewBuilder create a new builder instance
-func NewBuilder() IConfigurationBuilder {
-	builder := &configurationBuilder{}
-	builder.pList = make([]IConfigurationProvider, 0)
+func NewBuilder() IConfigBuilder {
+	builder := &configBuilder{}
+	builder.pList = make([]IConfigProvider, 0)
 
 	return builder
 }

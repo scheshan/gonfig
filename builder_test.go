@@ -1,23 +1,39 @@
-package gonfig_test
+package gonfig
 
 import "testing"
-import "github.com/scheshan/gonfig"
 
 func Test_NewBuilder(t *testing.T) {
-	builder := gonfig.NewBuilder()
+	builder := NewBuilder()
 	if builder == nil {
 		t.Error("builder is nil")
 	}
 }
 
 func Test_AddProvider(t *testing.T) {
-	builder := gonfig.NewBuilder()
-	builder.AddProvider(&testConfigurationProvider{})
+	builder := NewBuilder()
+	builder.AddProvider(&testConfigProvider{})
 }
 
-type testConfigurationProvider struct {
+func Test_GetProviderList(t *testing.T){
+	builder := NewBuilder()
+
+	p := &testConfigProvider{}
+
+	builder.AddProvider(p)
+
+	pList := builder.GetProviders()
+
+	if len(pList) != 1{
+		t.Error("Provider's length error")
+	}
+	if pList[0] != p{
+		t.Error("Provider type error")
+	}
 }
 
-func (p *testConfigurationProvider) GetData() map[string]string {
+type testConfigProvider struct {
+}
+
+func (p *testConfigProvider) GetData() map[string]string {
 	return make(map[string]string)
 }
