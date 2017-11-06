@@ -2,6 +2,14 @@ package gonfig
 
 import "testing"
 
+type testConfigSource struct {
+}
+
+func (p *testConfigSource) GetData() map[string]string {
+	return make(map[string]string)
+}
+
+
 func Test_NewBuilder(t *testing.T) {
 	builder := NewBuilder()
 	if builder == nil {
@@ -31,9 +39,22 @@ func Test_GetProviderList(t *testing.T){
 	}
 }
 
-type testConfigSource struct {
-}
+func Test_Build(t *testing.T){
+	builder := NewBuilder()
 
-func (p *testConfigSource) GetData() map[string]string {
-	return make(map[string]string)
+	s := &testConfigSource{}
+
+	builder.AddSource(s)
+
+	c := builder.Build()
+
+	config, ok := c.(*config)
+
+	if !ok{
+		t.Error("Config type error")
+	}
+
+	if len(config.sList) == 0{
+		t.Error("Config source length error")
+	}
 }
