@@ -11,11 +11,11 @@ func Test_AddIni(t *testing.T){
 	builder := NewBuilder()
 	AddIni(builder, path)
 
-	pList := builder.GetProviders()
+	pList := builder.GetSources()
 	if len(pList) != 1{
 		t.Error("Provider length error")
 	}
-	p, ok := pList[0].(*configIni)
+	p, ok := pList[0].(*iniSource)
 	if !ok{
 		t.Error("Type cast error")
 	}
@@ -35,7 +35,7 @@ Key2=bbb
 	`
 	reader := strings.NewReader(content)
 
-	c := &configIni{}
+	c := &iniSource{}
 	data := c.getDataFromReader(reader)
 
 	v, ok := data["Key1"]

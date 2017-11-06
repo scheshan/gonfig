@@ -11,7 +11,7 @@ func Test_EnvGetData(t *testing.T){
 
 	os.Setenv(key, value)
 
-	env := configEnv{}
+	env := envSource{}
 	d := env.GetData()
 
 	v, ok := d[key]
@@ -28,13 +28,13 @@ func Test_AddEnviron(t *testing.T){
 	builder := NewBuilder()
 	AddEnviron(builder)
 
-	pList := builder.GetProviders()
+	pList := builder.GetSources()
 
 	if len(pList) != 1{
 		t.Error("Provider length error")
 	}
 
-	_, ok := pList[0].(*configEnv)
+	_, ok := pList[0].(*envSource)
 	if !ok{
 		t.Error("Type cast error")
 	}

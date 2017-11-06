@@ -7,24 +7,24 @@ import (
 	"strings"
 )
 
-type configIni struct {
+type iniSource struct {
 	path string
 }
 
 const keyDelimiter = ":"
 
-func (i *configIni) GetData() map[string]string {
-	file, err := os.Open(i.path)
+func (s *iniSource) GetData() map[string]string {
+	file, err := os.Open(s.path)
 	if err != nil {
 		panic(err)
 	}
 
 	defer file.Close()
 
-	return i.getDataFromReader(file)
+	return s.getDataFromReader(file)
 }
 
-func (i *configIni) getDataFromReader(reader io.Reader) map[string]string {
+func (s *iniSource) getDataFromReader(reader io.Reader) map[string]string {
 	scanner := bufio.NewScanner(reader)
 
 	var key, value, sectionPrefix string
@@ -66,9 +66,9 @@ func (i *configIni) getDataFromReader(reader io.Reader) map[string]string {
 }
 
 func AddIni(builder IConfigBuilder, path string) {
-	i := &configIni{
+	i := &iniSource{
 		path: path,
 	}
 
-	builder.AddProvider(i)
+	builder.AddSource(i)
 }

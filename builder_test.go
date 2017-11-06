@@ -9,31 +9,31 @@ func Test_NewBuilder(t *testing.T) {
 	}
 }
 
-func Test_AddProvider(t *testing.T) {
+func Test_AddSource(t *testing.T) {
 	builder := NewBuilder()
-	builder.AddProvider(&testConfigProvider{})
+	builder.AddSource(&testConfigSource{})
 }
 
 func Test_GetProviderList(t *testing.T){
 	builder := NewBuilder()
 
-	p := &testConfigProvider{}
+	s := &testConfigSource{}
 
-	builder.AddProvider(p)
+	builder.AddSource(s)
 
-	pList := builder.GetProviders()
+	pList := builder.GetSources()
 
 	if len(pList) != 1{
-		t.Error("Provider's length error")
+		t.Error("Source's length error")
 	}
-	if pList[0] != p{
-		t.Error("Provider type error")
+	if pList[0] != s{
+		t.Error("Source type error")
 	}
 }
 
-type testConfigProvider struct {
+type testConfigSource struct {
 }
 
-func (p *testConfigProvider) GetData() map[string]string {
+func (p *testConfigSource) GetData() map[string]string {
 	return make(map[string]string)
 }

@@ -10,14 +10,14 @@ type IConfig interface {
 }
 
 type config struct {
-	pList []IConfigProvider
+	sList []IConfigSource
 	data  map[string]string
 	m     *sync.Mutex
 }
 
-func newConfig(pList []IConfigProvider) IConfig {
+func newConfig(sList []IConfigSource) IConfig {
 	c := &config{
-		pList: pList,
+		sList: sList,
 		m:     new(sync.Mutex),
 	}
 	return c
@@ -28,7 +28,7 @@ func (c *config) load() {
 
 	data := make(map[string]string)
 
-	for _, p := range c.pList {
+	for _, p := range c.sList {
 		pData := p.GetData()
 
 		for k, v := range pData {
@@ -40,6 +40,6 @@ func (c *config) load() {
 }
 
 func (c *config) Get(key string) (result string, ok bool) {
-	result, ok = c.data[key]
+	result, ok = c.data[key]	
 	return
 }
