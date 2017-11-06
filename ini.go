@@ -65,6 +65,7 @@ func (s *iniSource) getDataFromReader(reader io.Reader) map[string]string {
 	return result
 }
 
+//AddIni add a ini file to configuration.
 func AddIni(builder IConfigBuilder, path string) {
 	i := &iniSource{
 		path: path,

@@ -57,6 +57,7 @@ func (s *jsonSource) parseJSON(result map[string]string, prefix string, key stri
 	result[key] = fmt.Sprintf("%v", value)
 }
 
+//AddJSON add a json file to configuration
 func AddJSON(builder IConfigBuilder, path string) {
 	s := &jsonSource{
 		path: path,
