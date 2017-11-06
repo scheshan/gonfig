@@ -40,6 +40,6 @@ func (c *config) load() {
 }
 
 func (c *config) Get(key string) (result string, ok bool) {
-	result, ok = c.data[key]	
+	result, ok = c.data[key]
 	return
 }
