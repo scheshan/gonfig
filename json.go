@@ -10,6 +10,7 @@ import (
 
 type jsonSource struct {
 	path string
+	ch chan IConfigSource
 }
 
 func (s *jsonSource) GetData() map[string]string {
@@ -20,6 +21,10 @@ func (s *jsonSource) GetData() map[string]string {
 	defer file.Close()
 
 	return s.getDataFromReader(file)
+}
+
+func (s *jsonSource) SetCallbackChannel(ch chan IConfigSource){
+	s.ch = ch
 }
 
 func (s *jsonSource) getDataFromReader(reader io.Reader) map[string]string {

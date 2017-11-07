@@ -5,10 +5,13 @@ import "testing"
 type testConfigSource struct {
 }
 
-func (p *testConfigSource) GetData() map[string]string {
+func (s *testConfigSource) GetData() map[string]string {
 	return make(map[string]string)
 }
 
+func (s *testConfigSource) SetCallbackChannel(ch chan IConfigSource){
+
+}
 
 func Test_NewBuilder(t *testing.T) {
 	builder := NewBuilder()

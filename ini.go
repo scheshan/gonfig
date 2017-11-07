@@ -9,6 +9,7 @@ import (
 
 type iniSource struct {
 	path string
+	ch chan IConfigSource
 }
 
 const keyDelimiter = ":"
@@ -22,6 +23,10 @@ func (s *iniSource) GetData() map[string]string {
 	defer file.Close()
 
 	return s.getDataFromReader(file)
+}
+
+func (s *iniSource) SetCallbackChannel(ch chan IConfigSource){
+	s.ch = ch
 }
 
 func (s *iniSource) getDataFromReader(reader io.Reader) map[string]string {
