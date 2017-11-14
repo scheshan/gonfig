@@ -6,7 +6,7 @@ import (
 )
 
 type envSource struct {
-	ch chan IConfigSource
+	configSource
 }
 
 func (s *envSource) GetData() map[string]string {
@@ -25,10 +25,6 @@ func (s *envSource) getKeyValue(env string) (key string, value string) {
 	key = env[0:i]
 	value = env[i+1:]
 	return
-}
-
-func (s *envSource) SetCallbackChannel(ch chan IConfigSource){
-	s.ch = ch
 }
 
 // AddEnviron add environment variables to configuratio
