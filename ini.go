@@ -9,7 +9,7 @@ import (
 
 type iniSource struct {
 	path string
-	ch chan IConfigSource
+	ch   chan IConfigSource
 }
 
 const keyDelimiter = ":"
@@ -25,7 +25,7 @@ func (s *iniSource) GetData() map[string]string {
 	return s.getDataFromReader(file)
 }
 
-func (s *iniSource) SetCallbackChannel(ch chan IConfigSource){
+func (s *iniSource) SetCallbackChannel(ch chan IConfigSource) {
 	s.ch = ch
 }
 
@@ -59,9 +59,9 @@ func (s *iniSource) getDataFromReader(reader io.Reader) map[string]string {
 		key = sectionPrefix + strings.TrimSpace(line[0:separator])
 		value = strings.TrimSpace(line[separator+1:])
 
-		//Remote quotes
+		//Remove quotes
 		if len(value) > 0 && value[0] == '"' && value[len(value)-1] == '"' {
-			value = value[1 : len(value)-2]
+			value = value[1 : len(value)-1]
 		}
 
 		result[key] = value
