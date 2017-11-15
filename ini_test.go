@@ -1,19 +1,12 @@
 package gonfig
 
 import (
+	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
-
-const iniContent = `
-Key1=aaa
-//comment
-#comment
-;comment
-[Section]
-Key2=bbb
-Key3="ccc"
-`
 
 func Test_AddIni(t *testing.T) {
 	path := randomString(20)
@@ -35,7 +28,17 @@ func Test_AddIni(t *testing.T) {
 }
 
 func Test_IniGetDataFromReader(t *testing.T) {
-	reader := strings.NewReader(iniContent)
+	content := `
+Key1=aaa
+//comment
+#comment
+;comment
+[Section]
+Key2=bbb
+Key3="ccc"
+`
+
+	reader := strings.NewReader(content)
 
 	c := &iniSource{}
 	data := c.getDataFromReader(reader)
@@ -89,5 +92,38 @@ func Test_IniSetCallbaclChannel(t *testing.T) {
 
 	if c.ch != ch {
 		t.Error("Set callback channel error")
+	}
+}
+
+func Test_IniGetData(t *testing.T) {
+	p := filepath.Join(os.TempDir(), randomString(20))
+
+	fmt.Println(p)
+
+	defer os.Remove(p)
+
+	file, err := os.Create(p)
+	if err != nil {
+		t.Error(err)
+	}
+
+	content := `
+Key1=Value1
+`
+
+	file.WriteString(content)
+	file.Close()
+
+	c := &iniSource{
+		path: p,
+	}
+	data := c.GetData()
+
+	v, ok := data["Key1"]
+	if !ok {
+		t.Error("Get Key1 error")
+	}
+	if v != "Value1" {
+		t.Error("Get Key1 error")
 	}
 }
