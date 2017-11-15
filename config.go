@@ -20,6 +20,7 @@ func newConfig(sList []IConfigSource) IConfig {
 		sList: sList,
 		m:     new(sync.Mutex),
 	}
+	c.load()
 	return c
 }
 

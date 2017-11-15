@@ -6,10 +6,12 @@ type testConfigSource struct {
 }
 
 func (s *testConfigSource) GetData() map[string]string {
-	return make(map[string]string)
+	data := make(map[string]string)
+	data["Key1"] = "Value1"
+	return data
 }
 
-func (s *testConfigSource) SetCallbackChannel(ch chan IConfigSource){
+func (s *testConfigSource) SetCallbackChannel(ch chan IConfigSource) {
 
 }
 
@@ -25,7 +27,7 @@ func Test_AddSource(t *testing.T) {
 	builder.AddSource(&testConfigSource{})
 }
 
-func Test_GetProviderList(t *testing.T){
+func Test_GetProviderList(t *testing.T) {
 	builder := NewBuilder()
 
 	s := &testConfigSource{}
@@ -34,15 +36,15 @@ func Test_GetProviderList(t *testing.T){
 
 	pList := builder.GetSources()
 
-	if len(pList) != 1{
+	if len(pList) != 1 {
 		t.Error("Source's length error")
 	}
-	if pList[0] != s{
+	if pList[0] != s {
 		t.Error("Source type error")
 	}
 }
 
-func Test_Build(t *testing.T){
+func Test_Build(t *testing.T) {
 	builder := NewBuilder()
 
 	s := &testConfigSource{}
@@ -53,11 +55,11 @@ func Test_Build(t *testing.T){
 
 	config, ok := c.(*config)
 
-	if !ok{
+	if !ok {
 		t.Error("Config type error")
 	}
 
-	if len(config.sList) == 0{
+	if len(config.sList) == 0 {
 		t.Error("Config source length error")
 	}
 }
