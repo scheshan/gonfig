@@ -23,17 +23,21 @@ func (c *config) Map(i interface{}) {
 
 }
 
-func (c *config) Init() {
-	for _, s := range c.sList {
+func newConfig(items []*builderItem) *config {
+	sList := make([]Source, len(items))
+	for i := range items {
+		s, d := items[i].s, items[i].d
 		s.Load()
-	}
-}
+		if d != nil {
+			d.Subscribe(s)
+		}
 
-func newConfig(sList []Source) *config {
+		sList[i] = s
+	}
+
 	c := &config{
 		sList: sList,
 	}
-	c.Init()
 
 	return c
 }

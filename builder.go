@@ -1,24 +1,33 @@
 package gonfig
 
 type Builder interface {
-	Add(s Source)
+	Add(s Source, d Depend)
 	Build() Config
 }
 
-type configBuilder struct {
-	sList []Source
+type builderItem struct {
+	s Source
+	d Depend
 }
 
-func (b *configBuilder) Add(s Source) {
-	b.sList = append(b.sList, s)
+type configBuilder struct {
+	items []*builderItem
+}
+
+func (b *configBuilder) Add(s Source, d Depend) {
+	item := &builderItem{
+		s: s,
+		d: d,
+	}
+	b.items = append(b.items, item)
 }
 
 func (b *configBuilder) Build() Config {
-	return newConfig(b.sList)
+	return newConfig(b.items)
 }
 
 func (b *configBuilder) Init() {
-	b.sList = make([]Source, 0)
+	b.items = make([]*builderItem, 0)
 }
 
 func NewBuilder() Builder {
