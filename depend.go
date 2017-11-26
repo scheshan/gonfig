@@ -31,3 +31,9 @@ func (d *ConfigDepend) Unsubscribe(s Source) {
 func (d *ConfigDepend) Init() {
 	d.sList = make([]Source, 0)
 }
+
+func (d *ConfigDepend) Notify() {
+	for _, s := range d.sList {
+		s.Load()
+	}
+}

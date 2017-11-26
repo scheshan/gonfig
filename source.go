@@ -12,7 +12,7 @@ type ConfigSource struct {
 }
 
 func (s *ConfigSource) Load() {
-
+	s.Data = make(map[string]string)
 }
 
 func (s *ConfigSource) Get(key string) (value string, ok bool) {
