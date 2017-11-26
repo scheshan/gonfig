@@ -10,8 +10,8 @@ type config struct {
 }
 
 func (c *config) Get(key string) (value string, ok bool) {
-	for i := len(c.sList); i >= 0; i-- {
-		if value, ok = c.sList[i].Get(key); ok {
+	for i := len(c.sList); i > 0; i-- {
+		if value, ok = c.sList[i-1].Get(key); ok {
 			return
 		}
 	}
