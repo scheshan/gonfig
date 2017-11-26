@@ -16,6 +16,7 @@ func TestIniSource(t *testing.T) {
 	file.WriteString(`Key1=Value1
 //comment
 #comment
+
 ;comment
 [Section]
 Key2=Value2
