@@ -3,7 +3,7 @@ package gonfig
 import "testing"
 import "time"
 
-func TestFileDependSubscribe(t *testing.T) {
+func TestFileDepend(t *testing.T) {
 	s := &testSource{}
 
 	file, err := randomFile()
@@ -20,6 +20,19 @@ func TestFileDependSubscribe(t *testing.T) {
 	<-time.After(100 * time.Millisecond)
 
 	if s.loadCount != 1 {
+		t.Error("Load should be triggered")
+	}
+}
+
+func TestTimerDepend(t *testing.T) {
+	s := &testSource{}
+
+	d := NewTimerDepend(20 * time.Millisecond)
+	d.Subscribe(s)
+
+	<-time.After(105 * time.Millisecond) //wait more 5 milliseconds
+
+	if s.loadCount != 5 {
 		t.Error("Load should be triggered")
 	}
 }
