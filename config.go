@@ -1,5 +1,7 @@
 package gonfig
 
+const KeyDelimiter = ":"
+
 type Config interface {
 	Get(key string) (string, bool)
 	Map(i interface{})
