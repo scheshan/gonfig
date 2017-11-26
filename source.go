@@ -7,7 +7,6 @@ type Source interface {
 
 type ConfigSource struct {
 	Data map[string]string
-	D    Depend
 }
 
 func (s *ConfigSource) Load() {
