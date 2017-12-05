@@ -4,7 +4,6 @@ const KeyDelimiter = ":"
 
 type Config interface {
 	Get(key string) (string, bool)
-	Map(i interface{})
 }
 
 type config struct {
@@ -19,10 +18,6 @@ func (c *config) Get(key string) (value string, ok bool) {
 	}
 
 	return
-}
-
-func (c *config) Map(i interface{}) {
-
 }
 
 func newConfig(items []*builderItem) *config {

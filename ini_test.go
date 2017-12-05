@@ -43,3 +43,39 @@ Key3="Value3"`)
 		t.Error("Excepted:", "Value3", "actual:", value)
 	}
 }
+
+func TestIniSourceWithInvalidFormat(t *testing.T) {
+	file, err := randomFile()
+	if err != nil {
+		t.Error(err)
+	}
+
+	defer os.Remove(file.Name())
+
+	defer func() {
+		err := recover()
+
+		if err == nil {
+			t.Error("There must be an error")
+		}
+	}()
+
+	file.WriteString(`Invalid`)
+
+	s := IniSource(file.Name())
+	s.Load()
+}
+
+func TestIniWithInvalidPath(t *testing.T) {
+	defer func() {
+		err := recover()
+		if err == nil {
+			t.Error("There must be an error")
+		}
+	}()
+
+	path := randomString(20)
+
+	s := IniSource(path)
+	s.Load()
+}
