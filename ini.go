@@ -65,6 +65,7 @@ func (s *iniSource) getDataFromReader(reader io.Reader) map[string]string {
 	return result
 }
 
+//IniSource will return a config source supported ini file.
 func IniSource(path string) Source {
 	s := &iniSource{
 		path: path,

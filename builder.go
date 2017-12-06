@@ -1,5 +1,6 @@
 package gonfig
 
+//Builder is the interface that can configure and build a Config instance.
 type Builder interface {
 	Add(s Source, d Depend)
 	Build() Config
@@ -30,6 +31,7 @@ func (b *configBuilder) Init() {
 	b.items = make([]*builderItem, 0)
 }
 
+//NewBuilder will return a Builder instance
 func NewBuilder() Builder {
 	b := &configBuilder{}
 	b.Init()
